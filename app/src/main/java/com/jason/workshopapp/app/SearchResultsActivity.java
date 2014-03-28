@@ -2,16 +2,26 @@ package com.jason.workshopapp.app;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 
 public class SearchResultsActivity extends Activity {
+
+    public static String EXTRA_SOME_TEXT = "com.jason.workshopapp.app.SearchResultsText";
+    public static String TAG = "SEARCH";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search_results);
+
+        String text = getIntent().getStringExtra(EXTRA_SOME_TEXT);
+
+        Toast.makeText(this, text, Toast.LENGTH_LONG).show();
+        Log.i(TAG, text);
     }
 
 

@@ -2,14 +2,19 @@ package com.jason.workshopapp.app;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
 
 
 public class MainActivity extends Activity {
+
+    private static String twitterCreds = "a2lVVThCajNGdVF1UmdndVVBYVlKZzphQ3Q5NkR0ZlBzUGkxWDc1Z1V1Y3lSb0s1azJkV0pVRGJTc1RQNFU1dw==";
+    private static String twitterAuthUrl = "https://api.twitter.com/oauth2/token";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,8 +30,28 @@ public class MainActivity extends Activity {
     }
 
     private void searchTwitter() {
+
+        new AsyncTask<Void, Void, String>() {
+            @Override
+            protected String doInBackground(Void... voids) {
+                try {
+                    return getTwitterToken();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    return null;
+                }
+            }
+
+            @Override
+            protected void onPostExecute(String result) {
+                Toast.makeText(MainActivity.this, result, Toast.LENGTH_LONG).show();
+            }
+        }.execute();
+
+
         Intent intent = new Intent(this, SearchResultsActivity.class);
-        startActivity(intent);
+        intent.putExtra(SearchResultsActivity.EXTRA_SOME_TEXT, "Here is the text from the Main Activity!");
+        //startActivity(intent);
     }
 
     @Override
@@ -47,6 +72,19 @@ public class MainActivity extends Activity {
             return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    private String getTwitterToken() throws Exception {
+        RestClient client = new RestClient(twitterAuthUrl, this);
+        client.AddHeader("Authorization", "Basic " + twitterCreds);
+        client.AddHeader("Content-Type", "application/x-www-form-urlencoded;charset=UTF-8");
+
+        // POST Body Parameter
+        client.AddParam("grant_type", "client_credentials");
+
+        client.Execute(RestClient.RequestMethod.POST);
+
+        return client.getResponse();
     }
 
 }
