@@ -2,10 +2,11 @@ package com.jason.workshopapp.app;
 
 import android.app.Activity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.Toast;
+import android.view.ViewGroup;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 
 
 public class SearchResultsActivity extends Activity {
@@ -17,11 +18,24 @@ public class SearchResultsActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search_results);
+        StatusResponse statusResponse = (StatusResponse) getIntent().getSerializableExtra(EXTRA_SOME_TEXT);
+        TwitterStatus[] status = statusResponse.statuses;
 
-        String text = getIntent().getStringExtra(EXTRA_SOME_TEXT);
+        String[] tweets = new String[status.length];
 
-        Toast.makeText(this, text, Toast.LENGTH_LONG).show();
-        Log.i(TAG, text);
+        LinearLayout container = (LinearLayout) findViewById(R.id.tweet_container);
+
+
+        for(int i = 0; i < status.length; i++) {
+            tweets[i] = status[i].text;
+            TextView tweetTextView = new TextView(this);
+            tweetTextView.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+            tweetTextView.setText(status[i].text);
+            container.addView(tweetTextView);
+        }
+
+
+
     }
 
 

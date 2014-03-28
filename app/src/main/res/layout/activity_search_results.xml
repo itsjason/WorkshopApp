@@ -9,9 +9,17 @@
     tools:context="com.jason.workshopapp.app.SearchResultsActivity">
 
     <TextView
+        android:id="@+id/results_title"
         android:text="Here are the search results!"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="50dp"/>
+
+    <LinearLayout
+        android:id="@+id/tweet_container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_below="@id/results_title"></LinearLayout>
 
 </RelativeLayout>
