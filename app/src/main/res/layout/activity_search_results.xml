@@ -9,8 +9,9 @@
     tools:context="com.jason.workshopapp.app.SearchResultsActivity">
 
     <TextView
-        android:text="@string/hello_world"
+        android:text="Here are the search results!"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:textSize="50dp"/>
 
 </RelativeLayout>

@@ -1,12 +1,12 @@
 package com.jason.workshopapp.app;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
-import android.widget.TextView;
 
 
 public class MainActivity extends Activity {
@@ -15,21 +15,18 @@ public class MainActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-        final TextView awesomeText = (TextView) findViewById(R.id.awesome_text);
         Button heresTheButton = (Button) findViewById(R.id.search_button);
-
         heresTheButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 searchTwitter();
             }
         });
-
     }
 
     private void searchTwitter() {
-
+        Intent intent = new Intent(this, SearchResultsActivity.class);
+        startActivity(intent);
     }
 
     @Override
